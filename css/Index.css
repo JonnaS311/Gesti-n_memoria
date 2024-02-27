@@ -1,0 +1,51 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.container{
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    height: 100%;
+}
+
+.documentos, .grafica{
+    width: 100% !important;
+    height: 100% !important;
+    background-color: #84a98c;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.menu {
+    background-color: #333;
+    overflow: hidden;
+    width: 100% !important;
+    height: 50px !important;
+}
+
+.menu ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.menu li {
+    float: left;
+}
+
+.menu a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.menu a:hover {
+    background-color: #555;
+}

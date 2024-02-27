@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/documento.css">
+    <script>
+        // Assume `data` is an array of data sent from a JS file
+        const data = ["Item 1", "Item 2", "Item 3"];
+    
+        // Function to populate the data list with data
+        function populateDataList(data) {
+          const dataList = document.getElementById("dataList");
+          dataList.innerHTML = "";
+          for (const item of data) {
+            const listItem = document.createElement("li");
+            listItem.textContent = item;
+            dataList.appendChild(listItem);
+          }
+        }
+    
+        // Function to add data to the list
+        function addData() {
+          const newData = prompt("Enter new data:");
+          if (newData) {
+            data.push(newData);
+            populateDataList(data);
+          }
+        }
+    
+        // Function to start generating HTML
+        function startHTML() {
+          // Add code here to start generating HTML
+          console.log("Starting HTML generation...");
+        }
+    
+        // Add event listeners to the buttons
+        document.getElementById("addButton").addEventListener("click", addData);
+        document.getElementById("startButton").addEventListener("click", startHTML);
+      </script>
+    </head>
+    <body>
+      <div id="myContainer">
+        <div id="dataList"></div>
+        <br>
+        <button id="addButton">Add</button>
+        <button id="startButton">Start HTML</button>
+      </div>
+      <script>
+        // Populate the data list with initial data
+        populateDataList(data);
+      </script>
+</body>
+</html>
+
