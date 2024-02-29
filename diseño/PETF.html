@@ -1,49 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/Index.css">
+    <link rel="stylesheet" href="../css/grafica.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <title>Document</title>
+    <script src="../controlador/grafica.js"></script>
 </head>
+
 <body>
-    <iframe class="menu" src="diseño/menu.html" frameborder="0"></iframe>
     <div class="container">
-        <iframe class="documentos" src="diseño/formDocumento.html" frameborder="0"></iframe>
-        <canvas class="grafica" id="myChart"></canvas>
+        <div class="label-container">
+            <label>PARTICIONES ESTÁTICAS TAMAÑO FIJO</label>
+        </div>
+        <div class="grafica-container">
+            <canvas class="grafica" id="myChart"></canvas>
+        </div>
     </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Datos para el gráfico (puedes ajustar estos valores según tus necesidades)
-            var data = {
-                labels: ['Sección 1', 'Sección 2', 'Sección 3', 'Sección 4'],
-                datasets: [{
-                    label: 'Datos de la gráfica',
-                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                    borderColor: 'rgba(255, 99, 132, 1)',
-                    borderWidth: 1,
-                    data: [10, 25, 15, 30] // Valores para cada sección
-                }]
-            };
-
-            var options = {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            };
-
-            // Crear el gráfico de barras vertical
-            var ctx = document.getElementById('myChart').getContext('2d');
-            var myChart = new Chart(ctx, {
-                type: 'bar',
-                data: data,
-                options: options
-            });
-        });
-    </script>
 </body>
 </html>
