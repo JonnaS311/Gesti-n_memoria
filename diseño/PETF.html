@@ -4,19 +4,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/grafica.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="../controlador/grafica.js"></script>
+    <link rel="stylesheet" href="css/iframe.css">
+    <script src="../controlador/controlador.js"></script>
 </head>
 
 <body>
-    <div class="container">
-        <div class="label-container">
-            <label>PARTICIONES ESTÁTICAS TAMAÑO FIJO</label>
-        </div>
-        <div class="grafica-container">
-            <canvas class="grafica" id="myChart"></canvas>
-        </div>
+
+    <div id="particiones" class="particion-container">
+        <h1>Configuración de la memoria</h1>
+        <form id="jsonForm">
+            <label for="nombre">Tamaño de la partición:</label><br>
+            <input type="text" id="particion" name="particion" required><br>
+            <button id="botonParticion" onclick="obtenerValoresPETF()">Definir</button>
+        </form><br>
+        <button id="botonSig" onclick="mostrarDiv()">Siguiente</button>
     </div>
+
+    <div id= "iframe" class="container">
+        <iframe name="doc" class="documentos" src="selecProgramas.html" frameborder="0"></iframe>
+        <iframe name="gra" class="grafica" src="grafica.html" frameborder="0"></iframe>
+    </div>   
+
+    <script>
+        document.getElementById('iframe').style.display = 'none';
+    </script>
 </body>
 </html>

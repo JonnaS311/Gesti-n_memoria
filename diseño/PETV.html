@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/iframe.css">
+    <script src="../controlador/controlador.js"></script>
+</head>
+
+<body>
+    <div id="particiones" class="particion-container">
+        <h1>Configuración de la memoria</h1>
+        <form id="jsonForm">
+            <label for="nombre">Número de particiones:</label><br>
+            <input type="text" id="nombre" name="nombre"><br>
+            <button type="button" id="botonAgregarParticiones" onclick="obtenerDatosParticiones()">Agregar</button><br>
+            <label for="nombre">Eliga el ajuste</label><br>
+            <label for="Primer"><input type="radio" id="Primer" name="option" value="Primer"> Primer ajuste</label><br>
+            <label for="Peor"><input type="radio" id="Peor" name="option" value="Peor"> Peor ajuste</label><br>
+            <label for="Mejor"><input type="radio" id="Mejor" name="option" value="Mejor" checked> Mejor ajuste</label><br>
+            <button id="botonParticion" onclick="obtenerValoresPETV()">Definir</button>
+        </form><br>
+        <button id="botonSig" onclick="mostrarDiv()">Siguiente</button>
+    </div>
+
+    <div id= "iframe" class="container">
+        <iframe name="doc" class="documentos" src="selecProgramas.html" frameborder="0"></iframe>
+        <iframe name="gra" class="grafica" src="grafica.html" frameborder="0"></iframe>
+    </div>
+
+    <script>
+        document.getElementById('iframe').style.display = 'none';
+    </script>
+</body>
+
+</html>

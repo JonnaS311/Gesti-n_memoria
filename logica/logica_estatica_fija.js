@@ -1,9 +1,7 @@
 // Asignamos una memoria total de 16MiB
 const RAM = 16777216
-// hacemos particiones de 1 MiB
+
 const espacio_particionado = 1048576
-
-
 
 // nombre-proceso | inicio_mem | final_mem
 let tabla = []

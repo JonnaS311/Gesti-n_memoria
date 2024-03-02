@@ -5,9 +5,14 @@ body {
     padding: 0;
 }
 
-#myContainer {
+h1 {
+    font-size: 24px;
+    text-align: center;
+}
+
+#programas {
     max-width: 600px;
-    margin: 20px auto;
+    margin: 10px auto;
     padding: 20px;
     background-color: #fff;
     border-radius: 8px;
@@ -25,7 +30,7 @@ body {
     font-size: 16px;
 }
 
-#addButton, #startButton {
+#botonAgregar, #botonIniciar {
     background-color: #5c3e62;
     color: #fff;
     padding: 10px;
@@ -36,6 +41,6 @@ body {
     font-size: 16px;
 }
 
-#addButton:hover, #startButton:hover {
+#botonAgregar:hover, #botonIniciar:hover {
     background-color: #5c3e62;
 }

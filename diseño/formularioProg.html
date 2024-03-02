@@ -1,32 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/formulario.css">
-    <script src="../controlador/programas.js" defer></script>
+    <link rel="stylesheet" href="css/formulario.css">
+    <script src="../programas/programasEjecutables.js"></script>
+    <script src="../controlador/agregarProgramas.js" defer></script>
 </head>
+
 <body>
     <form id="jsonForm">
         <label for="nombre">Nombre:</label>
         <input type="text" id="nombre" name="nombre" required><br>
 
         <label for="text">.text:</label>
-        <input type="text" id="text" name="text" required><br>
+        <input type="text" id=".text" name="text" required><br>
 
         <label for="data">.data:</label>
-        <input type="text" id="data" name="data" required><br>
+        <input type="text" id=".data" name="data" required><br>
 
         <label for="bss">.bss:</label>
-        <input type="text" id="bss" name="bss" required><br>
+        <input type="text" id=".bss" name="bss" required><br>
 
-        <button type="button" onclick="generateJSON()">Crear Programa</button><br>
-        <button id="volver">Volver</button>
-        <script>
-            document.getElementById("volver").addEventListener("click", function () {
-                window.location.href = "formProgramas.html";
-            });
-        </script>
+        <button type="button" id="buttonGuardar">Crear Programa</button><br>
+        
+        <button type="button" id="volver">Volver</button>
     </form>
 </body>
+
 </html>

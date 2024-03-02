@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/documento.css">
+    <script src="../programas/programasEjecutables.js"></script>
+    <script src="../controlador/seleccionarProgramas.js" defer></script>
+</head>
+
+<body>
+    <div id="programas">
+        <h1>Programas</h1>
+        <div id="objetos-lista"></div><br>
+        <button id="botonAgregar">Agregar</button>
+        <script>
+            document.getElementById("botonAgregar").addEventListener("click", function () {
+                window.location.href = "formularioProg.html";
+            });
+        </script>
+        <button id="botonIniciar" onclick="guardarLista()">Iniciar</button>
+    </div>
+</body>
+
+</html>

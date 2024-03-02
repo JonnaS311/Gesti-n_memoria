@@ -5,8 +5,8 @@ body {
     padding: 0;
 }
 
-#myContainer {
-    max-width: 600px;
+#myContainer{
+    max-width: 100%;
     margin: 20px auto;
     padding: 20px;
     background-color: #fff;
