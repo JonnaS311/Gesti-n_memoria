@@ -1,76 +1,74 @@
+const particiones = [
+    ['SO', 0, 1048576],
+    ['p3', 1048576, 1484777],
+    ['p2', 1484777, 4181385],
+    ['ind', 4181385, 16777215],
+
+];
+
+let datasets; // Declara la variable aquí
+
 document.addEventListener('DOMContentLoaded', function () {
     const ctx = document.getElementById('myChart').getContext('2d');
+    const valoresUltimaColumna = particiones.map(particion => particion[2]);
+
+    datasets = particiones.map((particion, index) => {
+        const dataValue = particion[2] - particion[1] + 1;
+        return {
+            label: particion[0],
+            data: [dataValue >= 0 ? dataValue : 0],
+            backgroundColor: getBackgroundColor(particion[0], dataValue >= 0),
+            borderColor: 'rgb(0, 0, 0)',
+            borderWidth: 1
+        };
+    });
+
+    const options = {
+        scales: {
+            x: {
+                stacked: true
+            },
+            y: {
+                stacked: true,
+                beginAtZero: true,
+                /*ticks: {
+                    callback: function(value) {
+                        if (valoresUltimaColumna.includes(value)) {
+                            return value;
+                          } 
+                    }
+                } */  
+            }
+        }
+    };
 
     new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: ['memoria'],
-            datasets: [
-                {
-                    label: 'S0',
-                    data: [1048576],
-                    backgroundColor: 'rgb(120, 99, 132)',
-                },
-                {
-                    label: 'p2',
-                    data: [2048576],
-                    backgroundColor: 'rgb(255, 99, 132)',
-                },
-                {
-                    label: 'p3',
-                    data: [3048576],
-                    backgroundColor: 'rgb(255, 239, 132)',
-                }
-            ]
+            labels: ['Memoria RAM'],
+            datasets: datasets
         },
-        options: {
-            scales: {
-                x: {
-                    stacked: true,
-                },
-                y: {
-                    stacked: true,
-                    ticks: {
-                        callback: function (value, index, values) {
-                            // Mostrar etiquetas solo para valores específicos
-                            if ([1048576, 2048576, 3048576].includes(value)) {
-                                return value;
-                            } else {
-                                return '';
-                            }
-                        },
-                    },
-                },
-            },
-        },
+        options: options
     });
 });
 
 
-<importScripts></importScripts>
-console.log(window.listaSeleccionados); 
-/*
-function construirDatasets(listaDatos) {
-    return listaDatos.map((dato, index) => ({
-        label: `p${index + 1}`,
-        data: [dato],
-        backgroundColor: getRandomColor(), // Puedes usar una función para obtener colores aleatorios
-    }));
+
+// Función para obtener el color de fondo
+function getBackgroundColor(label, isDefined) {
+    if (label === 'ind') {
+        return isDefined ? 'rgba(0, 0, 0, 0)' : 'rgba(0, 0, 0, 0)';
+    }
+
+    // Para otras etiquetas, usa colores aleatorios
+    return getRandomColor();
 }
 
-// Ejemplo de uso
-var listaDatos = [1048576, 1048576, 2048576];
-var datasets = construirDatasets(listaDatos);
+// Función para obtener un color aleatorio
+function getRandomColor() {
+    const hue = Math.random() * 360;
+    return `hsla(${hue}, 70%, 60%, 1)`;
+}
+
 
 console.log(datasets);
-
-// Función para obtener colores aleatorios (puedes ajustar esto según tus necesidades)
-function getRandomColor() {
-    const letters = '0123456789ABCDEF';
-    let color = '#';
-    for (let i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
-}
-*/

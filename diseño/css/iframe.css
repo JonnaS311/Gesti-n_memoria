@@ -13,11 +13,22 @@ html, body {
     height: 100%;
 }
 
-.documentos {
-    width: 25%;
+#izquierda{
+    display: flex;
+    flex-direction: column;
+    width: 28%;
     height: 100%;
     border: none;
-    margin-right: 10px;
+}
+
+.documentos{
+    width: 100%;
+    height: 57%;
+}
+
+.tabla-particiones{
+    width: 100%;
+    height: 57%;
 }
 
 .grafica {
