@@ -6,7 +6,7 @@ let tabla = []
 let procesos_cargados = []
 
 // cargamos el sistema operativo en la RAM
-let sistema_operativo = 1048576
+let sistema_operativo = 1048575
 tabla.push(['SO',0, sistema_operativo])
 
 
@@ -50,8 +50,8 @@ function dinamica(programas) {
             for(j = 0; j<tabla.length; j++){
                 let posicion_inicial = tabla[j][2]
 
-                // añadimos a final de la pila
-                if(j+1 == tabla.length){
+                // añadimos a final de la pila si no sobre pasa la el tamaño de la pila
+                if(j+1 == tabla.length && posicion_inicial+programas[nombres_procesos[i]] < RAM){
                     // cargamos un proceso en la parte más alta de la memoria 
                     tabla.push([nombres_procesos[i],posicion_inicial+1,posicion_inicial+programas[nombres_procesos[i]]])
                     procesos_cargados.push(nombres_procesos[i])
@@ -60,12 +60,15 @@ function dinamica(programas) {
             }
         }
     }
-    
+    let aux_tabla = Array.from(tabla)
+    aux_tabla.push([undefined,tabla[tabla.length-1][2]+1,RAM-1])
+    return aux_tabla
 }
 
 
 // Test
-let pro = {'p4':436201, 'p8':2696608}
+
+/*let pro = {'p4':436201, 'p8':2696608}
 dinamica(pro)
 pro = {'p4':224649, 'p8':2696608,'p3':309150}
 dinamica(pro)   
@@ -75,7 +78,8 @@ pro = {'p4':436201,'p2':286708,'p6':3996608,'p8':2696608,'p5':209462}
 dinamica(pro)
 pro = {'p1':224649,'p3':309150,'p6':3996608,'p8':2696608}
 dinamica(pro)
-pro = {'p3':309150,'p2':286708,'p6':3996608,'p7':1785608,'p5':209462,'p4':436201}
+pro = {'p3':309150,'p7':1785608,'p2':286708,'p6':3996608,'p5':209462,'p4':436201}
+console.log(dinamica(pro))
+/*let pro = {'p4':16777216, 'p8':2696608}
 dinamica(pro)
-console.log(procesos_cargados)
-console.log(tabla)
+console.log(procesos_cargados)*/
