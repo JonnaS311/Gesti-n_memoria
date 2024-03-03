@@ -1,8 +1,7 @@
 // Asignamos una memoria total de 16MiB
 const RAM = 16777216
-// hacemos particiones de 1 MiB
-const espacio_particionado = 1048576
 
+const espacio_particionado = parseInt(prompt("valor de la particion en KiB"))*1024
 
 
 // nombre-proceso | inicio_mem | final_mem
@@ -13,7 +12,10 @@ let procesos_cargados = []
 let sistema_operativo = 1048575
 tabla.push(['SO',0, sistema_operativo])
 
-
+// cargamos las particiones en la tabla
+for (let i = 0; i < parseInt((RAM - 1048576)/espacio_particionado); i++) {
+    tabla.push([undefined,tabla[i][2]+1,tabla[i][2]+espacio_particionado])
+}
 
 function estaticas_fija(programas) {
     let nombres_procesos = Object.keys(programas)
@@ -39,8 +41,7 @@ function estaticas_fija(programas) {
     for(i = 0; i< nombres_procesos.length; i++){
             // validamos que el proceso no ocupe más memoria de la permitida por la partición
             // validamos que el proceso no este ya cargado en memoria
-            // TO-DO: Falta validar que la memoria no este aun llena
-            if(programas[nombres_procesos[i]]<= 1048576 && !procesos_cargados.includes(nombres_procesos[i])){
+            if(programas[nombres_procesos[i]]<= espacio_particionado && !procesos_cargados.includes(nombres_procesos[i])){
                 for(j = 0; j<tabla.length; j++){
                     /*
                         Recorremos cada elemento de la tabla para buscar si hay alguna partición disponible
@@ -52,31 +53,33 @@ function estaticas_fija(programas) {
                         tabla[j][0] = nombres_procesos[i]
                         procesos_cargados.push(nombres_procesos[i])
                         break
-                    } // añadimos a final de la pila
-                    else if(j+1 == tabla.length){
-                        tabla.push([nombres_procesos[i],posicion_inicial,posicion_inicial+1048575])
-                        procesos_cargados.push(nombres_procesos[i])
-                        break
                     }
                 }
             }
         
     }
+    return tabla
 }
 
 
 // Test
+
+/*pro = {'p2':307200,'p3':309150,'p6':3996608,'p4':436201,'p5':209462,
+'p7':1785608,'p9':1785608,'p10':209462,'p11':209462,'p12':209462,'p13':209462,
+'p14':209462,'p15':209462,'p16':209462,'p17':209462,
+'p18':209462,'p19':209462,'p20':209462,'p21':209462
+}*/
+
+/*
 let pro = {'p4':436201, 'p8':2696608}
 estaticas_fija(pro)
 pro = {'p4':224649, 'p8':2696608,'p3':309150}
-estaticas_fija(pro)
+estaticas_fija(pro)   
 pro = {'p5':209462}
 estaticas_fija(pro)
-pro = {'p4':436201,'p2':307200,'p5':209462,'p6':3996608,'p8':2696608}
+pro = {'p4':436201,'p2':286708,'p6':3996608,'p8':2696608,'p5':209462}
 estaticas_fija(pro)
-pro = {'p3':309150,'p1':224649,'p6':3996608,'p8':2696608}
+pro = {'p1':224649,'p3':309150,'p6':3996608,'p8':2696608}
 estaticas_fija(pro)
-pro = {'p3':309150,'p2':307200,'p6':3996608,'p4':436201,'p5':209462,'p7':1785608}
-estaticas_fija(pro)
-
-console.log(tabla)
+pro = {'p3':309150,'p2':286708,'p6':3996608,'p7':1785608,'p5':209462,'p4':436201}
+console.log(estaticas_fija(pro))*/
