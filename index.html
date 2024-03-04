@@ -1,16 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="diseño/css/Index.css">
     <title>Document</title>
 </head>
+
 <body>
     <nav class="menu">
         <ul>
-            <li><a href="#" onclick="cambiarIframe('diseño/PETF.html', 'PETF')">Particiones estáticas de tamaño fijo</a></li>
-            <li><a href="#" onclick="cambiarIframe('diseño/PETV.html', 'PETV')">Particiones estáticas de tamaño variable</a></li>
+            <li><a href="#" onclick="cambiarIframe('diseño/PETF.html', 'PETF')">Particiones estáticas de tamaño fijo</a>
+            </li>
+            <li><a href="#" onclick="cambiarIframe('diseño/PETV.html', 'PETV')">Particiones estáticas de tamaño
+                    variable</a></li>
             <li><a href="#" onclick="cambiarIframe('diseño/PDSC.html', 'PDSC')">Particiones dinámicas</a></li>
         </ul>
     </nav>
@@ -20,15 +24,16 @@
     </div>
     <script>
         function cambiarIframe(url, variable) {
-            var iframe = document.getElementById('iframe');
-            iframe.src = url;
+            localStorage.removeItem('particion')
+            localStorage.removeItem('listaProgramas')
+            localStorage.removeItem('grafica')
+            localStorage.removeItem('arrayParticiones')
+            setTimeout(function () {
+                var iframe = document.getElementById('iframe');
+                iframe.src = url;
+            }, 100);
         }
     </script>
 </body>
+
 </html>
-
-
-
-
-
-

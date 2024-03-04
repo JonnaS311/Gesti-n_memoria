@@ -10,7 +10,7 @@ let sistema_operativo = 1048575
 tabla.push(['SO',0, sistema_operativo])
 
 
-function dinamica(programas) {
+function dinamicaCC(programas) {
     let nombres_procesos = Object.keys(programas)
     let aux_procesos_car = procesos_cargados.slice()
     //verificamos si el proceso ya no está cargado

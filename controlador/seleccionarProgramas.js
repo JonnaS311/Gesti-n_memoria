@@ -1,11 +1,11 @@
-// Aquí se eligen los programas y se retorna la lista (de una forma que se descubrirá mas adelante)
-
-window.listaSeleccionados = [];
-
+// Aquí se eligen los programas y se retorna la lista
 document.addEventListener('DOMContentLoaded', function () {
-    
+
+    // Lógica de listas
+
     const objetosIniciales = cargarDesdeArchivo();
-    
+
+
     mostrarObjetosEnLista(objetosIniciales);
 
     function cargarDesdeArchivo() {
@@ -24,23 +24,55 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const checkbox = listItem.querySelector('input[type="checkbox"]');
             checkbox.addEventListener('change', function () {
-                handleCheckboxChange(this, listaSeleccionados);
+                handleCheckboxChange(this, listaSeleccionados, objeto);
             });
         });
     }
 
-    function handleCheckboxChange(checkbox, listaSeleccionados) {
+    function handleCheckboxChange(checkbox, listaSeleccionados, objeto) {
         if (checkbox.checked) {
-            listaSeleccionados.push(checkbox.value);
+            listaSeleccionados.push(objeto);
         } else {
-            const index = listaSeleccionados.indexOf(checkbox.value);
+            const index = listaSeleccionados.indexOf(objeto);
             if (index !== -1) {
                 listaSeleccionados.splice(index, 1);
             }
         }
     }
+
+    // Eventos del botón
+
+    document.getElementById("botonAgregar").addEventListener("click", function () {
+        window.location.href = "formularioProg.html";
+    });
+    document.getElementById("botonIniciar").addEventListener("click", function () {
+        guardarLista()
+        setTimeout(function() {
+            window.parent.postMessage("botonIniciarPulsado", "*");
+        }, 100);
+    });
 });
 
-function guardarLista(){
-    localStorage.setItem('listaSeleccionados', JSON.stringify(listaSeleccionados))
+
+const stack = 65536
+const heap = 131072
+
+function conversionlista() {
+    for (listaSeleccionados of listaSeleccionados) {
+        const sumaTotal = parseInt(listaSeleccionados[".text"]) + parseInt(listaSeleccionados[".data"]) + parseInt(listaSeleccionados[".bss"]) + stack + heap;
+
+        listaProgramas[listaSeleccionados.nombre] = sumaTotal;
+    }
+    listaSeleccionados = []   
 }
+
+function guardarLista() {
+    conversionlista()
+    localStorage.setItem('listaProgramas', JSON.stringify(listaProgramas))
+}
+
+function reiniciar() {
+    window.listaProgramas = {}
+}
+
+

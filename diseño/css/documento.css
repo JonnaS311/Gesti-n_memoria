@@ -30,7 +30,7 @@ h1 {
     font-size: 16px;
 }
 
-#botonAgregar, #botonIniciar {
+#botonAgregar, #botonIniciar, #botonReiniciar {
     background-color: #5c3e62;
     color: #fff;
     padding: 10px;

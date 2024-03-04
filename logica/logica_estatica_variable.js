@@ -1,32 +1,7 @@
 // Asignamos una memoria total de 16MiB
 const RAM = 16777216
 
-
-
-const espacio_particionado = [] //[3145728, 2097152, 1048576,4194304,5242880] [524288,524288,1048576,1048576,2097152,2097152,4194304,4194304]
-let is_particion = true
-let valor = 1048576
-
-// generamos las particiones validando que nunca se supere el valor de la RAM 
-while (is_particion) {
-    
-    let entrada = parseInt(prompt('queda por añadir '+(RAM-valor)+' añade particion: '))
-    if(isNaN(entrada)){
-        continue
-    }
-    valor+= entrada
-
-    if (valor > 16777216 || entrada < 262144) {
-       alert('valor no valido')
-       valor-= entrada
-    }else if (valor === 16777216 ) {
-        espacio_particionado.push(entrada)
-        is_particion = false
-    } else {
-        espacio_particionado.push(entrada)
-    }
-   
-}
+const espacio_particionado = JSON.parse(localStorage.getItem('arrayParticiones')) //[3145728, 2097152, 1048576,4194304,5242880] [524288,524288,1048576,1048576,2097152,2097152,4194304,4194304]
 
 // nombre-proceso | inicio_mem | final_mem
 let tabla = []
@@ -34,26 +9,29 @@ let procesos_cargados = []
 
 // cargamos el sistema operativo en la RAM
 let sistema_operativo = 1048575
-tabla.push(['SO',0, sistema_operativo])
+tabla.push(['SO', 0, sistema_operativo])
 
-// cargamos las particiones en la tabla
-for (let i = 0; i < espacio_particionado.length; i++) {
-    tabla.push([undefined,tabla[i][2]+1,tabla[i][2]+espacio_particionado[i]])
+if (espacio_particionado && espacio_particionado.length > 0) {
+
+    // cargamos las particiones en la tabla
+    for (let i = 0; i < espacio_particionado.length; i++) {
+        tabla.push([undefined, tabla[i][2] + 1, tabla[i][2] + espacio_particionado[i]])
+    }
 }
 
 
 function espacio_mayor(tabla, tamaño_min) {
     posicion_mayor = 0
     tamaño_bloque = 0
-    for (let i = 1; i< tabla.length; i++) {
-       if (tabla[i][0] === undefined && tamaño_min <= tabla[i][2]-tabla[i][1] && tamaño_bloque < tabla[i][2]-tabla[i][1]){
-            tamaño_bloque = tabla[i][2]-tabla[i][1]
+    for (let i = 1; i < tabla.length; i++) {
+        if (tabla[i][0] === undefined && tamaño_min <= tabla[i][2] - tabla[i][1] && tamaño_bloque < tabla[i][2] - tabla[i][1]) {
+            tamaño_bloque = tabla[i][2] - tabla[i][1]
             posicion_mayor = i
-       }
+        }
     }
-    if (posicion_mayor != 0){
+    if (posicion_mayor != 0) {
         return posicion_mayor
-    }else{
+    } else {
         return -1
     }
 }
@@ -62,70 +40,70 @@ function espacio_ajustado(tabla, tamaño_min) {
     posicion_mayor = 0
     tamaño_bloque = 0
     mejor_ajuste = null
-    for (let i = 1; i< tabla.length; i++) {
-       if (tabla[i][0] === undefined && tamaño_min <= tabla[i][2]-tabla[i][1] ){
-            if (mejor_ajuste === null ||  tamaño_bloque > tabla[i][2]-tabla[i][1]) {
+    for (let i = 1; i < tabla.length; i++) {
+        if (tabla[i][0] === undefined && tamaño_min <= tabla[i][2] - tabla[i][1]) {
+            if (mejor_ajuste === null || tamaño_bloque > tabla[i][2] - tabla[i][1]) {
                 mejor_ajuste = 1
-                tamaño_bloque = tabla[i][2]-tabla[i][1]
+                tamaño_bloque = tabla[i][2] - tabla[i][1]
                 posicion_mayor = i
-            }       
-       }
+            }
+        }
     }
-    if (posicion_mayor != 0){
+    if (posicion_mayor != 0) {
         return posicion_mayor
-    }else{
+    } else {
         return -1
     }
 }
 
-function estatica_variable(programas,ajuste) {
+function estatica_variable(programas, ajuste) {
     let nombres_procesos = Object.keys(programas)
     let aux_procesos_car = procesos_cargados.slice()
     //verificamos si el proceso ya no está cargado
-    for(k = 0; k < procesos_cargados.length;k++){
-        if(!nombres_procesos.includes(procesos_cargados[k])){
-                let proceso_eliminar = procesos_cargados[k]
-                for(i = 0; i<tabla.length;i++){
-                    if(tabla[i][0] == proceso_eliminar){
-                        // eliminamos el proceso de la tabla y de la lista de procesos cargados
-                        tabla[i][0] = undefined
-                        aux_procesos_car = aux_procesos_car.filter((element) => element !== proceso_eliminar);
-                        break
-                    }
+    for (k = 0; k < procesos_cargados.length; k++) {
+        if (!nombres_procesos.includes(procesos_cargados[k])) {
+            let proceso_eliminar = procesos_cargados[k]
+            for (i = 0; i < tabla.length; i++) {
+                if (tabla[i][0] == proceso_eliminar) {
+                    // eliminamos el proceso de la tabla y de la lista de procesos cargados
+                    tabla[i][0] = undefined
+                    aux_procesos_car = aux_procesos_car.filter((element) => element !== proceso_eliminar);
+                    break
                 }
-                
             }
+
+        }
     }
     procesos_cargados = aux_procesos_car
 
     //cargar procesos
-    for(i = 0; i< nombres_procesos.length; i++){
+    for (i = 0; i < nombres_procesos.length; i++) {
         // validamos que el proceso no este ya cargado en memoria
-        if(!procesos_cargados.includes(nombres_procesos[i])){
+        if (!procesos_cargados.includes(nombres_procesos[i])) {
 
-            if (ajuste === 'peor' ){
+            if (ajuste === 'peor') {
                 posicion_espacio = espacio_mayor(tabla, programas[nombres_procesos[i]])
                 if (posicion_espacio != -1) {
                     tabla[posicion_espacio][0] = nombres_procesos[i]
                     procesos_cargados.push(nombres_procesos[i])
                 }
-                continue   
+                continue
             }
-            if (ajuste === 'mejor' ) {
+            if (ajuste === 'mejor') {
                 posicion_espacio = espacio_ajustado(tabla, programas[nombres_procesos[i]])
                 if (posicion_espacio != -1) {
                     tabla[posicion_espacio][0] = nombres_procesos[i]
                     procesos_cargados.push(nombres_procesos[i])
                 }
-                continue  
+                continue
             }
-            for(j = 0; j<tabla.length; j++){
+            for (j = 0; j < tabla.length; j++) {
                 /*
                     Recorremos cada elemento de la tabla para buscar si hay alguna partición disponible
                     y verificamos si el proceso es de un tamaño igual o menor
                 */
                 // primer ajuste
-                if (tabla[j][0] === undefined && programas[nombres_procesos[i]] <= tabla[j][2] - tabla[j][1] && ajuste === 'primer' ){
+                if (tabla[j][0] === undefined && programas[nombres_procesos[i]] <= tabla[j][2] - tabla[j][1] && ajuste === 'primer') {
                     // añadimos el proceso en un espacio vacio 
                     tabla[j][0] = nombres_procesos[i]
                     procesos_cargados.push(nombres_procesos[i])
@@ -133,7 +111,7 @@ function estatica_variable(programas,ajuste) {
                 }
             }
         }
-    
+
     }
 
     return tabla

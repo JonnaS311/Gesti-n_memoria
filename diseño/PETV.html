@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/iframe.css">
     <script src="../controlador/controlador.js"></script>
+    <script src="../logica/logica_estatica_variable.js"></script>
 </head>
 
 <body>
@@ -16,15 +17,16 @@
             <input type="text" id="nombre" name="nombre"><br>
             <button type="button" id="botonAgregarParticiones" onclick="obtenerDatosParticiones()">Agregar</button><br>
             <label for="nombre">Eliga el ajuste</label><br>
-            <label for="Primer"><input type="radio" id="Primer" name="option" value="Primer"> Primer ajuste</label><br>
-            <label for="Peor"><input type="radio" id="Peor" name="option" value="Peor"> Peor ajuste</label><br>
-            <label for="Mejor"><input type="radio" id="Mejor" name="option" value="Mejor" checked> Mejor ajuste</label><br>
+            <label for="Primer"><input type="radio" id="Primer" name="option" value="primer"> Primer ajuste</label><br>
+            <label for="Peor"><input type="radio" id="Peor" name="option" value="peor"> Peor ajuste</label><br>
+            <label for="Mejor"><input type="radio" id="Mejor" name="option" value="mejor" checked> Mejor
+                ajuste</label><br>
             <button id="botonParticion" onclick="obtenerValoresPETV()">Definir</button>
         </form><br>
         <button id="botonSig" onclick="mostrarDiv()">Siguiente</button>
     </div>
 
-    <div id= "iframe" class="container">
+    <div id="iframe" class="container">
         <div id="izquierda">
             <iframe name="doc" class="documentos" src="selecProgramas.html" frameborder="0"></iframe>
             <iframe name="tab" class="tabla" src="tabla.html" frameborder="0"></iframe>
@@ -33,8 +35,57 @@
     </div>
 
     <script>
-        document.getElementById('iframe').style.display = 'none';
+        localStorage.setItem('tipo', 'PETV')
+
+        document.getElementById('iframe').style.display = 'none'
+        
+        valor = 1048576
+        is_particion = true
+        let espacio = []
+
+        function obtenerDatosParticiones() {
+            var entrada = parseInt(document.getElementById("nombre").value);
+
+            alert('Queda por añadir ' + (16777216 - valor))
+
+            valor += entrada
+
+            if (valor > 16777216 || entrada < 262144) {
+                alert('valor no valido')
+                valor -= entrada
+            } else if (valor === 16777216) {
+                espacio.push(entrada)
+                is_particion = false
+            } else {
+                espacio.push(entrada)
+            }
+
+            localStorage.setItem('arrayParticiones', JSON.stringify(espacio))
+            document.getElementById("nombre").value = "";
+        }
+
+        function obtenerValoresPETV() {
+            var formulario = document.getElementById("jsonForm")
+            var opciones = formulario.elements["option"]
+
+            for (var i = 0; i < opciones.length; i++) {
+                if (opciones[i].checked) {
+                    localStorage.setItem('opcionSeleccionada', opciones[i].value)
+                    break
+                }
+            }
+        }
+
+        window.addEventListener("message", function (event) {
+            if (event.data === "botonIniciarPulsado") {
+                programas = localStorage.getItem('listaProgramas') || window.listaProgramas
+
+                tabla = estatica_variable(JSON.parse(programas), localStorage.getItem('opcionSeleccionada'))
+                grafica = JSON.stringify(tabla)
+                localStorage.setItem('grafica', grafica)
+            }
+        });
+
     </script>
 </body>
-
 </html>

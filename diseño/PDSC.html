@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/iframe.css">
     <script src="../controlador/controlador.js"></script>
+    <!--<script src="../logica/logica_dinamica.js"></script>-->
+    <script src="../logica/logica_recompactacion.js"></script>
 </head>
 
 <body>
@@ -13,13 +15,14 @@
         <h1>Configuración de la memoria</h1>
         <form id="jsonForm">
             <label for="nombre">Eliga el ajuste</label><br>
-            <label for="Primer"><input type="radio" id="Primer" name="option" value="Primer"> Primer ajuste</label><br>
-            <label for="Peor"><input type="radio" id="Peor" name="option" value="Peor"> Peor ajuste</label><br>
-            <label for="Mejor"><input type="radio" id="Mejor" name="option" value="Mejor" checked> Mejor ajuste</label><br>
-            <button id="botonSC" onclick="obtenerValoresPDSC()">Sin compactación</button>
+            <label for="Primer"><input type="radio" id="Primer" name="option" value="primer"> Primer ajuste</label><br>
+            <label for="Peor"><input type="radio" id="Peor" name="option" value="peor"> Peor ajuste</label><br>
+            <label for="Mejor"><input type="radio" id="Mejor" name="option" value="mejor" checked> Mejor
+                ajuste</label><br>
+            <button id="botonSC">Sin compactación</button>
         </form><br>
         <div id="jsonForm">
-            <button id="botonCC" onclick="obtenerValoresPDCC()">Con compactación</button>
+            <button id="botonCC">Con compactación</button>
         </div><br>
         <button id="botonSig" onclick="mostrarDiv()">Siguiente</button>
     </div>
@@ -33,7 +36,51 @@
     </div>
 
     <script>
+        localStorage.setItem('tipo', 'PDSC')
+
         document.getElementById('iframe').style.display = 'none';
+
+        var tipoClickeado = null;
+
+        var formulario = document.getElementById("jsonForm");
+
+        formulario.addEventListener("submit", function (event) {
+            event.preventDefault();
+            tipoClickeado = "botonSC";
+            obtenerValoresPDSC();
+        });
+
+        document.getElementById("botonCC").addEventListener("click", function () {
+            tipoClickeado = "botonCC"
+        });
+
+        function obtenerValoresPDSC() {
+            var formulario = document.getElementById("jsonForm");
+            var opciones = formulario.elements["option"];
+
+            for (var i = 0; i < opciones.length; i++) {
+                if (opciones[i].checked) {
+                    localStorage.setItem('opcionSeleccionada', opciones[i].value)
+                    break;
+                }
+            }
+        }
+
+        window.addEventListener("message", function (event) {
+            if (event.data === "botonIniciarPulsado") {
+                programas = localStorage.getItem('listaProgramas') || window.listaProgramas
+
+                if (tipoClickeado === "botonSC") {
+                    tabla = dinamica(JSON.parse(programas), localStorage.getItem('opcionSeleccionada'))
+                }
+                if (tipoClickeado === "botonCC") {
+                    tabla = dinamicaCC(JSON.parse(programas))
+                }
+                grafica = JSON.stringify(tabla)
+                localStorage.setItem('grafica', grafica)
+
+            }
+        });
     </script>
 </body>
 

@@ -37,7 +37,7 @@ function AgregarPrograma() {
 document.addEventListener('DOMContentLoaded', function () {
     document.getElementById("buttonGuardar").addEventListener("click", AgregarPrograma);
     document.getElementById("volver").addEventListener("click", function () {
-        window.location.href = "formProgramas.html";
+        window.location.href = "selecProgramas.html";
     });
 });
 

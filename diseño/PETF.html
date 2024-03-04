@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/iframe.css">
     <script src="../controlador/controlador.js"></script>
+    <script src="../logica/logica_estatica_fija.js"></script>
 </head>
 
 <body>
@@ -13,23 +14,43 @@
     <div id="particiones" class="particion-container">
         <h1>Configuración de la memoria</h1>
         <form id="jsonForm">
-            <label for="nombre">Tamaño de la partición:</label><br>
+            <label for="nombre">Tamaño de la partición en KiB:</label><br>
             <input type="text" id="particion" name="particion" required><br>
             <button id="botonParticion" onclick="obtenerValoresPETF()">Definir</button>
         </form><br>
         <button id="botonSig" onclick="mostrarDiv()">Siguiente</button>
     </div>
 
-    <div id= "iframe" class="container">
+    <div id="iframe" class="container">
         <div id="izquierda">
             <iframe name="doc" class="documentos" src="selecProgramas.html" frameborder="0"></iframe>
             <iframe name="tab" class="tabla" src="tabla.html" frameborder="0"></iframe>
         </div>
         <iframe name="gra" class="grafica" src="grafica.html" frameborder="0"></iframe>
-    </div>   
+    </div>
 
     <script>
-        document.getElementById('iframe').style.display = 'none';
+        localStorage.setItem('tipo', 'PETF')
+
+        document.getElementById('iframe').style.display = 'none'
+
+        function obtenerValoresPETF() {
+            var valor = document.getElementById("particion").value
+            particion = parseInt(valor) * 1024
+            localStorage.setItem('particion', particion)
+        }
+
+        window.addEventListener("message", function (event) {
+            if (event.data === "botonIniciarPulsado") {
+                programas = localStorage.getItem('listaProgramas') || window.listaProgramas
+
+                tabla = estaticas_fija(JSON.parse(programas))
+                grafica = JSON.stringify(tabla)
+                localStorage.setItem('grafica', grafica)
+            }
+        });
+
     </script>
 </body>
+
 </html>

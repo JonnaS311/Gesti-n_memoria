@@ -1,8 +1,7 @@
 // Asignamos una memoria total de 16MiB
 const RAM = 16777216
 
-const espacio_particionado = parseInt(prompt("valor de la particion en KiB"))*1024
-
+var espacio_particionado = parseInt(localStorage.getItem('particion') || window.particion) //parseInt(prompt("valor de la particion en KiB"))*1024
 
 // nombre-proceso | inicio_mem | final_mem
 let tabla = []
