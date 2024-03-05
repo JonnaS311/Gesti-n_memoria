@@ -59,7 +59,7 @@ const heap = 131072
 
 function conversionlista() {
     for (listaSeleccionados of listaSeleccionados) {
-        const sumaTotal = parseInt(listaSeleccionados[".text"]) + parseInt(listaSeleccionados[".data"]) + parseInt(listaSeleccionados[".bss"]) + stack + heap;
+        const sumaTotal = parseInt(listaSeleccionados["text"]) + parseInt(listaSeleccionados["data"]) + parseInt(listaSeleccionados["bss"]) + stack + heap;
 
         listaProgramas[listaSeleccionados.nombre] = sumaTotal;
     }

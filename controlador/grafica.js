@@ -51,6 +51,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 stacked: true,
                 beginAtZero: true,
             }
+        },
+        legend: {
+            position: 'right', 
         }
     };
 
@@ -137,7 +140,6 @@ function seleccionarParticiones() {
         return crearParticiones(parseInt(localStorage.getItem('particion')))
     }
     if (localStorage.getItem('tipo') == 'PETV') {
-        console.log(crearParticiones2(JSON.parse(localStorage.getItem('arrayParticiones'))))
         return crearParticiones2(JSON.parse(localStorage.getItem('arrayParticiones')))
     }
     if (localStorage.getItem('tipo') == 'PDSC') {

@@ -21,7 +21,7 @@
         <button id="botonSig" onclick="mostrarDiv()">Siguiente</button>
     </div>
 
-    <div id="iframe" class="container">
+    <div id="iframe" class="iframe">
         <div id="izquierda">
             <iframe name="doc" class="documentos" src="selecProgramas.html" frameborder="0"></iframe>
             <iframe name="tab" class="tabla" src="tabla.html" frameborder="0"></iframe>
@@ -31,7 +31,8 @@
 
     <script>
         localStorage.setItem('tipo', 'PETF')
-
+        convGrafaTab(seleccionarParticiones())
+        
         document.getElementById('iframe').style.display = 'none'
 
         function obtenerValoresPETF() {
@@ -47,6 +48,7 @@
                 tabla = estaticas_fija(JSON.parse(programas))
                 grafica = JSON.stringify(tabla)
                 localStorage.setItem('grafica', grafica)
+                convGrafaTab(tabla)
             }
         });
 
