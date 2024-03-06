@@ -13,25 +13,37 @@ function AgregarPrograma() {
         bss: bss
     };
 
-    window.jsonString = localStorage.getItem('jsonString') || window.jsonString;
+    if (!isNaN(parseInt(text)) && !isNaN(parseInt(data)) && !isNaN(parseInt(bss))) {
+        if (parseInt(text) > 0 && parseInt(data) > 0 && parseInt(bss) > 0) {
+            window.jsonString = localStorage.getItem('jsonString') || window.jsonString;
 
-    const programasActuales = leerProgramas();
+            const programasActuales = leerProgramas();
 
-    programasActuales.push(nuevoObjeto);
+            programasActuales.push(nuevoObjeto);
 
-    const nuevoJsonString = JSON.stringify(programasActuales, null, 2);
+            const nuevoJsonString = JSON.stringify(programasActuales, null, 2);
 
-    if (window.actualizarJsonString) {
-        window.actualizarJsonString(nuevoJsonString);
+            if (window.actualizarJsonString) {
+                window.actualizarJsonString(nuevoJsonString);
+            }
+
+            document.getElementById("nombre").value = "";
+            document.getElementById(".text").value = "";
+            document.getElementById(".data").value = "";
+            document.getElementById(".bss").value = "";
+
+            // Mostrar un mensaje de confirmación
+            alert("Programa guardado con éxito.");
+        } else {
+            alert("Programa Explotó BOOOMMM!!! pero por colocar números negativos");
+        }
+    } else {
+        alert("Programa Explotó BOOOMMM!!!");
     }
 
-    document.getElementById("nombre").value = "";
-    document.getElementById(".text").value = "";
-    document.getElementById(".data").value = "";
-    document.getElementById(".bss").value = "";
 
-    // Mostrar un mensaje de confirmación
-    alert("Programa guardado con éxito.");
+
+
 }
 
 document.addEventListener('DOMContentLoaded', function () {

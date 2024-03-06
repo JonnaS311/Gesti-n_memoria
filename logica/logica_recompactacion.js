@@ -61,8 +61,8 @@ function dinamicaCC(programas) {
         }
     }
     let aux_tabla1 = Array.from(tabla1)
-    aux_tabla.push([undefined,tabla[tabla1.length-1][2]+1,RAM1-1])
-    return aux_tabla
+    aux_tabla1.push([undefined,tabla1[tabla1.length-1][2]+1,RAM1-1])
+    return aux_tabla1
 }
 
 

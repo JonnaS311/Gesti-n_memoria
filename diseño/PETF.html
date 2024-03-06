@@ -32,13 +32,23 @@
     <script>
         localStorage.setItem('tipo', 'PETF')
         convGrafaTab(seleccionarParticiones())
-        
+
         document.getElementById('iframe').style.display = 'none'
 
         function obtenerValoresPETF() {
             var valor = document.getElementById("particion").value
-            particion = parseInt(valor) * 1024
-            localStorage.setItem('particion', particion)
+            if (!isNaN(parseInt(valor))) {
+                particion = parseInt(valor) * 1024
+                if ( particion < 16777216 && particion > 262144) {
+                    localStorage.setItem('particion', particion)
+
+                }else {
+                    alert('El dato no es valido.')
+                }
+            } else {
+                alert('El dato no es valido.')
+            }
+
         }
 
         window.addEventListener("message", function (event) {

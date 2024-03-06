@@ -39,30 +39,33 @@
         convGrafaTab(seleccionarParticiones())
 
         document.getElementById('iframe').style.display = 'none'
-        
-        valor = 1048576
+
+        valor = 1048576 //so
         is_particion = true
         let espacio = []
 
         function obtenerDatosParticiones() {
             var entrada = parseInt(document.getElementById("nombre").value);
+            if (!isNaN(entrada)) {
+                valor += entrada
 
-            alert('Queda por añadir ' + (16777216 - valor))
-
-            valor += entrada
-
-            if (valor > 16777216 || entrada < 262144) {
-                alert('valor no valido')
-                valor -= entrada
-            } else if (valor === 16777216) {
-                espacio.push(entrada)
-                is_particion = false
+                if (valor > 16777216 || entrada < 262144) {
+                    alert('valor no valido')
+                    valor -= entrada
+                } else if (valor === 16777216) {
+                    espacio.push(entrada)
+                    is_particion = false
+                } else {
+                    espacio.push(entrada)
+                }
+                alert('Queda por añadir ' + (16777216 - valor))
+                localStorage.setItem('arrayParticiones', JSON.stringify(espacio))
+                
             } else {
-                espacio.push(entrada)
+                alert('El dato ingresado no es válido.')
             }
-
-            localStorage.setItem('arrayParticiones', JSON.stringify(espacio))
             document.getElementById("nombre").value = "";
+
         }
 
         function obtenerValoresPETV() {
@@ -91,4 +94,5 @@
 
     </script>
 </body>
+
 </html>

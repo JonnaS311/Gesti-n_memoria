@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Lógica de listas
 
     const objetosIniciales = cargarDesdeArchivo();
+    var checkbox 
 
 
     mostrarObjetosEnLista(objetosIniciales);
@@ -22,10 +23,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 ${objeto.nombre}`;
             lista.appendChild(listItem);
 
-            const checkbox = listItem.querySelector('input[type="checkbox"]');
+            checkbox = listItem.querySelector('input[type="checkbox"]');
             checkbox.addEventListener('change', function () {
                 handleCheckboxChange(this, listaSeleccionados, objeto);
             });
+
         });
     }
 
@@ -48,6 +50,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById("botonIniciar").addEventListener("click", function () {
         guardarLista()
         setTimeout(function() {
+            location.reload()
             window.parent.postMessage("botonIniciarPulsado", "*");
         }, 100);
     });
@@ -67,6 +70,7 @@ function conversionlista() {
 }
 
 function guardarLista() {
+    listaProgramas = {}
     conversionlista()
     localStorage.setItem('listaProgramas', JSON.stringify(listaProgramas))
 }
