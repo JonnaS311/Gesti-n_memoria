@@ -1,7 +1,8 @@
 // Aquí se crea un nuevo programa
 
 function AgregarPrograma() {
-    const nombre = document.getElementById("nombre").value;
+    // obtenemos el nombre sin espacios
+    const nombre = document.getElementById("nombre").value.replace(/\s/g, "");
     const text = document.getElementById(".text").value;
     const data = document.getElementById(".data").value;
     const bss = document.getElementById(".bss").value;
@@ -22,7 +23,8 @@ function AgregarPrograma() {
             const nombreExiste = programasActuales.some(objeto => objeto.nombre === nuevoObjeto.nombre);
 
             // Si el nombre no existe, agregar el nuevo objeto a la lista y actualizar el JSON
-            if (!nombreExiste) {
+            // validamos que el nombre del proceso no sea igual al del sistema operativo
+            if (!nombreExiste && nuevoObjeto.nombre !== 'SO') {
                 programasActuales.push(nuevoObjeto);
                 const nuevoJsonString = JSON.stringify(programasActuales, null, 2);
 
