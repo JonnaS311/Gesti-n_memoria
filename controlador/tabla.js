@@ -47,17 +47,29 @@ const tbody = document.createElement('tbody');
 
 window.addEventListener('storage', function (event) {
   if (event.key === 'tablaVisual') {
-    // Borrar 
-    tbody.innerHTML = '';
 
-    // Actualizar el valor de particiones
-    const nuevasParticiones = JSON.parse(localStorage.getItem('tablaVisual'));
+    if (localStorage.getItem('tablaVisual') == null) {
+      tbody.innerHTML = '';
 
-    // Agregar filas a la tabla
-    for (const particion of nuevasParticiones) {
-      const fila = crearFila(particion);
-      tbody.appendChild(fila);
+      for (const particion of nuevasParticiones) {
+        const fila = crearFila(particion);
+        tbody.appendChild(fila);
+      }
+      
+    } else {
+      // Borrar 
+      tbody.innerHTML = '';
+
+      // Actualizar el valor de particiones
+      const nuevasParticiones = JSON.parse(localStorage.getItem('tablaVisual'));
+
+      // Agregar filas a la tabla
+      for (const particion of nuevasParticiones) {
+        const fila = crearFila(particion);
+        tbody.appendChild(fila);
+      }
     }
+
   }
 });
 

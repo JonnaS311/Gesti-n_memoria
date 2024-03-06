@@ -6,26 +6,46 @@ document.addEventListener('DOMContentLoaded', function () {
 
     window.addEventListener('storage', function (event) {
         if (event.key === 'grafica') {
-            // Actualizar el valor de particiones
-            const nuevasParticiones = JSON.parse(localStorage.getItem('grafica'));
+            if (localStorage.getItem('grafica') == null) {
 
-            // Actualizar el valor de datasets
-            datasets = nuevasParticiones.map((particion, index) => {
-                const dataValue = particion[2] - particion[1] + 1;
-                return {
-                    label: particion[0],
-                    data: [dataValue >= 0 ? dataValue : 0],
-                    backgroundColor: getBackgroundColor(particion[0], dataValue >= 0),
-                    borderColor: 'rgb(0, 0, 0)',
-                    borderWidth: 1
-                };
-            });
+                datasets = particiones.map((particion, index) => {
+                    const dataValue = particion[2] - particion[1] + 1;
+                    return {
+                        label: particion[0],
+                        data: [dataValue >= 0 ? dataValue : 0],
+                        backgroundColor: getBackgroundColor(particion[0], dataValue >= 0),
+                        borderColor: 'rgb(0, 0, 0)',
+                        borderWidth: 1
+                    };
+                });
 
-            // Actualizar la configuración de la gráfica
-            config.data.datasets = datasets;
+                config.data.datasets = datasets;
 
-            // Actualizar la gráfica
-            myChart.update();
+                myChart.update()
+                
+            } else {
+                // Actualizar el valor de particiones
+                const nuevasParticiones = JSON.parse(localStorage.getItem('grafica'));
+
+                // Actualizar el valor de datasets
+                datasets = nuevasParticiones.map((particion, index) => {
+                    const dataValue = particion[2] - particion[1] + 1;
+                    return {
+                        label: particion[0],
+                        data: [dataValue >= 0 ? dataValue : 0],
+                        backgroundColor: getBackgroundColor(particion[0], dataValue >= 0),
+                        borderColor: 'rgb(0, 0, 0)',
+                        borderWidth: 1
+                    };
+                });
+
+                // Actualizar la configuración de la gráfica
+                config.data.datasets = datasets;
+
+                // Actualizar la gráfica
+                myChart.update();
+            }
+
         }
     });
 
@@ -53,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         },
         legend: {
-            position: 'right', 
+            position: 'right',
         }
     };
 

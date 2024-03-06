@@ -37,5 +37,5 @@ window.leerProgramas = function() {
 
 window.actualizarJsonString = function (nuevoJsonString) {
     window.jsonString = nuevoJsonString;
-    localStorage.setItem('jsonString', nuevoJsonString);
+    localStorage.setItem('jsonString', window.jsonString);
 };

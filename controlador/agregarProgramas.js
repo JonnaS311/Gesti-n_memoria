@@ -19,12 +19,20 @@ function AgregarPrograma() {
 
             const programasActuales = leerProgramas();
 
-            programasActuales.push(nuevoObjeto);
+            const nombreExiste = programasActuales.some(objeto => objeto.nombre === nuevoObjeto.nombre);
 
-            const nuevoJsonString = JSON.stringify(programasActuales, null, 2);
+            // Si el nombre no existe, agregar el nuevo objeto a la lista y actualizar el JSON
+            if (!nombreExiste) {
+                programasActuales.push(nuevoObjeto);
+                const nuevoJsonString = JSON.stringify(programasActuales, null, 2);
 
-            if (window.actualizarJsonString) {
-                window.actualizarJsonString(nuevoJsonString);
+                // Verificar si la función de actualización está definida antes de llamarla
+                if (window.actualizarJsonString) {
+                    window.actualizarJsonString(nuevoJsonString);
+                    alert('Programa guardado con éxito.');
+                }
+            } else {
+                alert('El programa con nombre ' + nuevoObjeto.nombre + ' ya existe.');
             }
 
             document.getElementById("nombre").value = "";
@@ -32,8 +40,6 @@ function AgregarPrograma() {
             document.getElementById(".data").value = "";
             document.getElementById(".bss").value = "";
 
-            // Mostrar un mensaje de confirmación
-            alert("Programa guardado con éxito.");
         } else {
             alert("Programa Explotó BOOOMMM!!! pero por colocar números negativos");
         }

@@ -36,9 +36,11 @@
 
     <script>
         localStorage.setItem('tipo', 'PETV')
-        convGrafaTab(seleccionarParticiones())
 
         document.getElementById('iframe').style.display = 'none'
+        
+        convGrafaTab(seleccionarParticiones())
+
 
         valor = 1048576 //so
         is_particion = true
@@ -75,6 +77,7 @@
             for (var i = 0; i < opciones.length; i++) {
                 if (opciones[i].checked) {
                     localStorage.setItem('opcionSeleccionada', opciones[i].value)
+                    alert('Configuración guardada, con el ' + opciones[i].value + " ajuste.")
                     break
                 }
             }

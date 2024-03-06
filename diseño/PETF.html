@@ -41,7 +41,7 @@
                 particion = parseInt(valor) * 1024
                 if ( particion < 16777216 && particion > 262144) {
                     localStorage.setItem('particion', particion)
-
+                    alert('Configuración guardada.')
                 }else {
                     alert('El dato no es valido.')
                 }

@@ -23,8 +23,7 @@
         </form><br>
         <div id="jsonForm">
             <button id="botonCC">Con compactación</button>
-        </div><br>
-        <button id="botonSig" onclick="mostrarDiv()">Siguiente</button>
+        </div>
     </div>
 
     <div id="iframe" class="iframe">
@@ -53,15 +52,16 @@
 
         document.getElementById("botonCC").addEventListener("click", function () {
             tipoClickeado = "botonCC"
+            mostrarDiv()
         });
 
         function obtenerValoresPDSC() {
-            var formulario = document.getElementById("jsonForm");
             var opciones = formulario.elements["option"];
 
             for (var i = 0; i < opciones.length; i++) {
                 if (opciones[i].checked) {
                     localStorage.setItem('opcionSeleccionada', opciones[i].value)
+                    mostrarDiv()
                     break;
                 }
             }

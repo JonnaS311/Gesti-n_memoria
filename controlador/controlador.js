@@ -16,6 +16,22 @@ function mostrarDiv() {
     document.getElementById('iframe').style.display = 'flex';
 }
 
+function bloquearBoton(idBoton) {
+    let boton = document.getElementById(idBoton);
+    if (boton) {
+      boton.disabled = true;
+      boton.style.backgroundColor = "gray";
+    }
+  }
+
+  function desbloquearBoton(idBoton) {
+    let boton = document.getElementById(idBoton);
+    if (boton) {
+      boton.disabled = false;
+      boton.style.backgroundColor = "";
+    }
+  }
+
 // Conversion de la tabla para mostrarla
 function convGrafaTab(tablaOriginal) {
     const nuevaTabla = [];
