@@ -1,0 +1,83 @@
+html, body {
+    margin: 1;
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    height: 99%;
+    width: 99%;
+}
+
+.iframe {
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+    height: 100%;
+}
+
+#izquierda{
+    display: flex;
+    flex-direction: column;
+    width: 28%;
+    height: 100%;
+    border: none;
+}
+
+.documentos{
+    width: 100%;
+    height: 57%;
+}
+
+.tabla{
+    width: 100%;
+    height: 57%;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.grafica {
+    flex-grow: 1;
+    height: 100%;
+    border: none;
+    box-sizing: border-box;
+}
+
+h1 {
+    font-size: 24px;
+    text-align: center;
+}
+
+.particion-container{
+    max-width: 600px;
+    margin: 10px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#botonParticion,
+#botonAgregarParticiones,
+#botonSC,
+#botonCC,
+#botonSig {
+    background-color: #5c3e62;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+#jsonForm {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    align-items: center;
+}
+
+#jsonForm button:hover {
+    background-color: #5c3e62;
+}

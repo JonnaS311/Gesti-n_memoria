@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/iframe.css">
+    <script src="../controlador/controlador.js"></script>
+    <script src="../logica/logica_estatica_fija.js"></script>
+</head>
+
+<body>
+
+    <div id="particiones" class="particion-container">
+        <h1>Configuración de la memoria</h1>
+        <form id="jsonForm">
+            <label for="nombre">Tamaño de la partición en KiB:</label><br>
+            <input type="text" id="particion" name="particion" required><br>
+            <button id="botonParticion" onclick="obtenerValoresPETF()">Definir</button>
+        </form><br>
+        <button id="botonSig" onclick="mostrarDiv()">Siguiente</button>
+    </div>
+
+    <div id="iframe" class="iframe">
+        <div id="izquierda">
+            <iframe name="doc" class="documentos" src="selecProgramas.html" frameborder="0"></iframe>
+            <iframe name="tab" class="tabla" src="tabla.html" frameborder="0"></iframe>
+        </div>
+        <iframe name="gra" class="grafica" src="grafica.html" frameborder="0"></iframe>
+    </div>
+
+    <script>
+        localStorage.setItem('tipo', 'PETF')
+        convGrafaTab(seleccionarParticiones())
+
+        document.getElementById('iframe').style.display = 'none'
+
+        function obtenerValoresPETF() {
+            var valor = document.getElementById("particion").value
+            if (!isNaN(parseInt(valor))) {
+                particion = parseInt(valor) * 1024
+                if ( particion < 16777216 && particion > 262144) {
+                    localStorage.setItem('particion', particion)
+                    alert('Configuración guardada.')
+                }else {
+                    alert('El dato no es valido.')
+                }
+            } else {
+                alert('El dato no es valido.')
+            }
+
+        }
+
+        window.addEventListener("message", function (event) {
+            if (event.data === "botonIniciarPulsado") {
+                programas = localStorage.getItem('listaProgramas') || window.listaProgramas
+
+                tabla = estaticas_fija(JSON.parse(programas))
+                grafica = JSON.stringify(tabla)
+                localStorage.setItem('grafica', grafica)
+                convGrafaTab(tabla)
+            }
+        });
+
+    </script>
+</body>
+
+</html>

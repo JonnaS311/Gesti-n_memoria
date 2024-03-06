@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/iframe.css">
+    <script src="../controlador/controlador.js"></script>
+    <script src="../logica/logica_dinamica.js"></script>
+    <script src="../logica/logica_recompactacion.js"></script>
+</head>
+
+<body>
+    <div id="particiones" class="particion-container">
+        <h1>Configuración de la memoria</h1>
+        <form id="jsonForm">
+            <label for="nombre">Eliga el ajuste</label><br>
+            <label for="Primer"><input type="radio" id="Primer" name="option" value="primer"> Primer ajuste</label><br>
+            <label for="Peor"><input type="radio" id="Peor" name="option" value="peor"> Peor ajuste</label><br>
+            <label for="Mejor"><input type="radio" id="Mejor" name="option" value="mejor" checked> Mejor
+                ajuste</label><br>
+            <button id="botonSC">Sin compactación</button>
+        </form><br>
+        <div id="jsonForm">
+            <button id="botonCC">Con compactación</button>
+        </div>
+    </div>
+
+    <div id="iframe" class="iframe">
+        <div id="izquierda">
+            <iframe name="doc" class="documentos" src="selecProgramas.html" frameborder="0"></iframe>
+            <iframe name="tab" class="tabla" src="tabla.html" frameborder="0"></iframe>
+        </div>
+        <iframe name="gra" class="grafica" src="grafica.html" frameborder="0"></iframe>
+    </div>
+
+    <script>
+        localStorage.setItem('tipo', 'PDSC')
+        convGrafaTab(seleccionarParticiones())
+        
+        document.getElementById('iframe').style.display = 'none';
+
+        var tipoClickeado = null;
+
+        var formulario = document.getElementById("jsonForm");
+
+        formulario.addEventListener("submit", function (event) {
+            event.preventDefault();
+            tipoClickeado = "botonSC";
+            obtenerValoresPDSC();
+        });
+
+        document.getElementById("botonCC").addEventListener("click", function () {
+            tipoClickeado = "botonCC"
+            mostrarDiv()
+        });
+
+        function obtenerValoresPDSC() {
+            var opciones = formulario.elements["option"];
+
+            for (var i = 0; i < opciones.length; i++) {
+                if (opciones[i].checked) {
+                    localStorage.setItem('opcionSeleccionada', opciones[i].value)
+                    mostrarDiv()
+                    break;
+                }
+            }
+        }
+
+        window.addEventListener("message", function (event) {
+            if (event.data === "botonIniciarPulsado") {
+                programas = localStorage.getItem('listaProgramas') || window.listaProgramas
+
+                if (tipoClickeado === "botonSC") {
+                    tabla = dinamica(JSON.parse(programas), localStorage.getItem('opcionSeleccionada'))
+                }
+                if (tipoClickeado === "botonCC") {
+                    tabla = dinamicaCC(JSON.parse(programas))
+                }
+                grafica = JSON.stringify(tabla)
+                localStorage.setItem('grafica', grafica)
+                convGrafaTab(tabla)
+            }
+        });
+    </script>
+</body>
+
+</html>
