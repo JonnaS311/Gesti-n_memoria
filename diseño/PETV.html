@@ -89,7 +89,6 @@
 
                 tabla = estatica_variable(JSON.parse(programas), localStorage.getItem('opcionSeleccionada'))
                 grafica = JSON.stringify(tabla)
-                console.log(tabla)
                 localStorage.setItem('grafica', grafica)
                 convGrafaTab(tabla)
             }
